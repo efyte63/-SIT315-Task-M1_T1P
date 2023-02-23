@@ -1,0 +1,32 @@
+const int motionPin = 2; // Motion sensor input pin
+const int ledPin = 4; // LED output pin
+volatile int motionFlag = 0; // Motion flag variable
+
+void setup() {
+  Serial.begin(9600); // Start serial communication at 9600 baud rate
+  pinMode(motionPin, INPUT); // Set motion sensor pin as input
+  pinMode(ledPin, OUTPUT); // Set LED pin as output
+  attachInterrupt(digitalPinToInterrupt(motionPin), motionInterrupt, CHANGE); // Attach motion interrupt
+}
+
+void loop() {
+  // Check motion flag status and update system status
+  if (motionFlag == 1) {
+    Serial.println("Motion detected!");
+  } else {
+    Serial.println("No motion detected.");
+  }
+  delay(1000);
+}
+
+void motionInterrupt() {
+  // Update motion flag status
+  motionFlag = digitalRead(motionPin);
+  
+  // Act based on motion flag status
+  if (motionFlag == 1) {
+    digitalWrite(ledPin, HIGH); // Turn LED on
+  } else {
+    digitalWrite(ledPin, LOW); // Turn LED off
+  }
+}
