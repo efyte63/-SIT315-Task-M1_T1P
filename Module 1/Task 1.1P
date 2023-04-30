@@ -1,22 +1,35 @@
+// Set the motion sensor pin to digital pin 2
 const int motionSensorPin = 2;
+
+// Set the LED pin to digital pin 4
 const int ledPin = 4;
 
 void setup() {
+  // Initialize serial communication with a baud rate of 9600
   Serial.begin(9600);
+
+  // Set the motion sensor pin to an input
   pinMode(motionSensorPin, INPUT);
+
+  // Set the LED pin to an output
   pinMode(ledPin, OUTPUT);
 }
 
 void loop() {
+  // Read the motion sensor pin
   int motion = digitalRead(motionSensorPin);
   
+  // If motion is detected, turn on the LED and print a message to the serial monitor
   if (motion == HIGH) {
     Serial.println("Motion detected!");
     digitalWrite(ledPin, HIGH);
-  } else {
+  } 
+  // If no motion is detected, turn off the LED and print a message to the serial monitor
+  else {
     Serial.println("No motion detected.");
     digitalWrite(ledPin, LOW);
   }
   
+  // Wait for 100 milliseconds before repeating the loop
   delay(100);
 }
